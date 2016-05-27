@@ -1,4 +1,4 @@
-# docker-znc #
+# ZNC #
 
 [Docker Hub](https://hub.docker.com/r/kyleondy/znc/)
 
