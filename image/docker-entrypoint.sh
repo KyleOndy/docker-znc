@@ -2,9 +2,11 @@
 
 # Options.
 DATA_DIR=${ZNC_DATA_DIR:=/znc-data}
+echo "DATA_DIR=$DATA_DIR"
 
 # Build modules from source.
 MODULES_DIR=${ZNC_MODULES_DIR:=${DATA_DIR}/modules}
+echo "MODULES_DIR=$MODULES_DIR"
 if [ -d "${MODULES_DIR}" ]; then
   # Store current directory.
   cwd="$(pwd)"
@@ -24,6 +26,7 @@ fi
 
 # Create default config if it doesn't exist
 CONFIG_DIR=${ZNC_CONFIG_DIR:=${DATA_DIR}/configs}
+echo "CONFIG_DIR=$CONFIG_DIR"
 if [ ! -f "${CONFIG_DIR}/znc.conf" ]; then
   mkdir -p "${CONFIG_DIR}"
   cp /znc.conf.default "${CONFIG_DIR}/znc.conf"
