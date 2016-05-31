@@ -1,15 +1,16 @@
 #! /usr/bin/env sh
 
 # Options.
-DATADIR="/znc-data"
+DATA_DIR=${ZNC_DATA_DIR:=/znc-data}
 
 # Build modules from source.
-if [ -d "${DATADIR}/modules" ]; then
+MODULES_DIR=${ZNC_MODULES_DIR:=${DATA_DIR}/modules}
+if [ -d "${MODULES_DIR}" ]; then
   # Store current directory.
   cwd="$(pwd)"
 
   # Find module sources.
-  modules=$(find "${DATADIR}/modules" -name "*.cpp")
+  modules=$(find "${MODULES_DIR}" -name "*.cpp")
 
   # Build modules.
   for module in $modules; do
@@ -22,14 +23,15 @@ if [ -d "${DATADIR}/modules" ]; then
 fi
 
 # Create default config if it doesn't exist
-if [ ! -f "${DATADIR}/configs/znc.conf" ]; then
-  mkdir -p "${DATADIR}/configs"
-  cp /znc.conf.default "${DATADIR}/configs/znc.conf"
+CONFIG_DIR=${ZNC_CONFIG_DIR:=${DATA_DIR}/configs}
+if [ ! -f "${CONFIG_DIR}/znc.conf" ]; then
+  mkdir -p "${CONFIG_DIR}"
+  cp /znc.conf.default "${CONFIG_DIR}/znc.conf"
 fi
 
-# Make sure $DATADIR is owned by znc user. This effects ownership of the
+# Make sure $DATA_DIR is owned by znc user. This effects ownership of the
 # mounted directory on the host machine too.
-chown -R znc:znc "$DATADIR"
+chown -R znc:znc "$DATA_DIR"
 
 # Start ZNC.
-exec znc --allow-root --foreground --datadir="$DATADIR" $@
+exec znc --allow-root --foreground --datadir="$DATA_DIR" $@

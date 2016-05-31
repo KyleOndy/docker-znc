@@ -18,3 +18,8 @@ I moved to alpine linux and added curl so I can use the [znc-push](https://githu
 ## Organize these thoguhs
 
 data dir in the container is `/znc-data`
+
+Env vars:
+- ZNC_DATA_DIR
+- ZNC_MODULES_DIR
+- ZNC_CONFIG_DIR
