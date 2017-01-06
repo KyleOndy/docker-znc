@@ -8,6 +8,14 @@ printf "ZNC_DATA_DIR: %s\n" "$DATA_DIR"
 # Build modules from source.
 MODULES_DIR=${ZNC_MODULES_DIR:=${DATA_DIR}/modules}
 printf "MODULES_DIR: %s\n" "$MODULES_DIR"
+
+# TODO: if not disabled
+ZNC_PUSH=${NO_ZNC_PUSH:=}
+if [ -n "$ZNC_PUSH" ]; then
+  mkdir -p "$DATA_DIR/modules"
+  printf "Getting latest 'znc-push' from jreese/znc-push\n"
+  curl -so "$DATA_DIR/modules/push.cpp" https://raw.githubusercontent.com/jreese/znc-push/master/push.cpp
+fi
 if [ -d "${MODULES_DIR}" ]; then
   # Store current directory.
   cwd="$(pwd)"
