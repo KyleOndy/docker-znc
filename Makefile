@@ -2,7 +2,7 @@ NAME = kyleondy/znc
 VERSION = 0.2.0
 
 .PHONY: all
-all: make
+all: build
 
 .PHONY: build
 build:
@@ -10,5 +10,5 @@ build:
 
 .PHONY: tag_latest
 tag_latest:
-	docker tag -f $(NAME):$(VERSION) $(NAME):latest
+	docker tag $(NAME):$(VERSION) $(NAME):latest
 
