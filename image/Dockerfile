@@ -1,7 +1,8 @@
-FROM gliderlabs/alpine:3.3
+FROM gliderlabs/alpine:3.4
 MAINTAINER Kyle Ondy <kyle@ondy.me>
 
 RUN apk add --no-cache \
+      # build base for the znc-push module
       build-base \
       curl \
       openssl-dev \
