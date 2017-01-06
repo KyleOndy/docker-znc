@@ -3,11 +3,11 @@ set -euo pipefail
 
 # Options.
 DATA_DIR=${ZNC_DATA_DIR:=/znc-data}
-echo "DATA_DIR=$DATA_DIR"
+printf "ZNC_DATA_DIR: %s\n" "$DATA_DIR"
 
 # Build modules from source.
 MODULES_DIR=${ZNC_MODULES_DIR:=${DATA_DIR}/modules}
-echo "MODULES_DIR=$MODULES_DIR"
+printf "MODULES_DIR: %s\n" "$MODULES_DIR"
 if [ -d "${MODULES_DIR}" ]; then
   # Store current directory.
   cwd="$(pwd)"
@@ -17,19 +17,20 @@ if [ -d "${MODULES_DIR}" ]; then
 
   # Build modules.
   for module in $modules; do
-    cd "$(dirname "$module")"
+    cd "$(dirname "$module")" || exit 1
     znc-buildmod "$module"
   done
 
   # Go back to original directory.
-  cd "$cwd"
+  cd "$cwd" || exit 1
 fi
 
 # Create default config if it doesn't exist
 CONFIG_DIR=${ZNC_CONFIG_DIR:=${DATA_DIR}/configs}
-echo "CONFIG_DIR=$CONFIG_DIR"
+printf "CONFIG_DIR: %s\n" "$CONFIG_DIR"
 if [ ! -f "${CONFIG_DIR}/znc.conf" ]; then
   mkdir -p "${CONFIG_DIR}"
+  printf "Exisitng config not found. Using default config\n"
   cp /znc.conf.default "${CONFIG_DIR}/znc.conf"
 fi
 
@@ -38,4 +39,5 @@ fi
 chown -R znc:znc "$DATA_DIR"
 
 # Start ZNC.
-exec znc --allow-root --foreground --datadir="$DATA_DIR" $@
+printf "Starting znc\n"
+exec znc --allow-root --foreground --datadir="$DATA_DIR" "$@"
