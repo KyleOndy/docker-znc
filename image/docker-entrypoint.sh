@@ -1,4 +1,5 @@
 #! /usr/bin/env sh
+set -euo pipefail
 
 # Options.
 DATA_DIR=${ZNC_DATA_DIR:=/znc-data}
