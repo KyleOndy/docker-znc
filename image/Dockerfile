@@ -15,4 +15,3 @@ RUN chmod 644 /znc.conf.default
 
 EXPOSE 6667
 ENTRYPOINT ["/entrypoint.sh"]
-CMD [""]
